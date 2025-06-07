@@ -176,6 +176,7 @@ alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
 alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
 alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
 alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
+alt-shift-5 = 'move-node-to-workspace 5 --focus-follows-window'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -211,11 +212,3 @@ alt-w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
 #     4 = '^dell$'
 #     5 = 'main'
 #     6 = '^elgato$'
-
-[mouse]
-mod_drag = true
-mod_key = "ctrl_comm"  # Например, "option"
-mouse_drag_entire_window = true
-
-[mod]
-ctrl_comm = ["control", "command"]
