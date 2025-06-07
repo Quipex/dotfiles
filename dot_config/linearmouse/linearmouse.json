@@ -1,0 +1,26 @@
+{
+  "schemes" : [
+    {
+      "pointer" : {
+        "acceleration" : 0.8,
+        "disableAcceleration" : true
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x3434",
+          "category" : "mouse",
+          "serialNumber" : "SN1234567890",
+          "productID" : "0xd03f",
+          "productName" : "Keychron M6"
+        }
+      },
+      "scrolling" : {
+        "distance" : null,
+        "acceleration" : 0,
+        "reverse" : true,
+        "speed" : 32
+      }
+    }
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+}
