@@ -1,0 +1,47 @@
+---
+- name: Machine setup
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Check if Homebrew is installed
+      stat:
+        path: /opt/homebrew/bin/brew
+      register: brew_check
+      when: ansible_architecture == "arm64"
+
+    - name: Check if Homebrew is installed (Intel Macs)
+      stat:
+        path: /usr/local/bin/brew
+      register: brew_check
+      when: ansible_architecture != "arm64"
+
+    - name: Install Homebrew if missing
+      shell: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      args:
+        creates: "{{ brew_check.stat.path | default('/opt/homebrew/bin/brew') }}"
+      when: not brew_check.stat.exists and ansible_os_family == "Darwin"
+
+    - name: Install Homebrew formulae
+      community.general.homebrew:
+        name:
+          - colima
+          - docker
+          - htop
+          - neovim
+          - ripgrep
+          - tmux
+        state: present
+      when: ansible_os_family == "Darwin"
+
+    - name: Install Homebrew casks
+      community.general.homebrew_cask:
+        name:
+          - aerospace
+          - font-jetbrains-mono-nerd-font
+          - linearmouse
+          - maccy
+        state: present
+      when: ansible_os_family == "Darwin"
