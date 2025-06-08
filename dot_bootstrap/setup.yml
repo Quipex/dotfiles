@@ -45,3 +45,15 @@
           - maccy
         state: present
       when: ansible_os_family == "Darwin"
+    
+    - name: Tap FelixKratz/formulae
+      community.general.homebrew_tap:
+        name: FelixKratz/formulae
+        state: present
+      when: ansible_os_family == "Darwin"
+
+    - name: Install borders
+      community.general.homebrew:
+        name: borders
+        state: present
+      when: ansible_os_family == "Darwin"
