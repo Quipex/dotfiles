@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Инициализируем переменные, чтобы избежать "unbound variable"
+exclude=""
+extensions=""
+output_name=""
+
+# Функция помощи
+usage() {
+  echo "Использование: $0 [-x <исключения>] [-e <расширения>] [-o <имя_файла>] <путь>"
+  exit 1
+}
+
+# Парсим опции
+while getopts "x:e:o:" opt; do
+  case "$opt" in
+    x) exclude="$OPTARG"     ;;
+    e) extensions="$OPTARG"  ;;
+    o) output_name="$OPTARG" ;;
+    *) usage                  ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+# Проверяем, что передан ровно один аргумент — путь
+if [ $# -ne 1 ]; then
+  usage
+fi
+
+target_path="$1"
+base_name=$(basename "$target_path")
+
+# Если задано -o, используем его, иначе берём имя папки/файла
+if [ -n "$output_name" ]; then
+  file_name="$output_name"
+else
+  file_name="$base_name"
+fi
+
+output_file="{{ .chezmoi.homeDir }}/tmp/${file_name}.xml"
+
+# Собираем команду с опциями только если они заданы
+cmd=({{ .chezmoi.homeDir }}/scripts/list-path-content.sh)
+[ -n "$exclude"    ] && cmd+=(-x "$exclude")
+[ -n "$extensions" ] && cmd+=(-e "$extensions")
+cmd+=("$target_path")
+
+# Выполняем и сохраняем вывод
+"${cmd[@]}" > "$output_file"
+
+echo "✔ Вывод сохранён в $output_file"

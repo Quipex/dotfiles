@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# === ЗАГРУЗКА .env ===
+ENV_PATH="{{ .chezmoi.homeDir }}/scripts/.env"
+if [ -f "$ENV_PATH" ]; then
+  set -o allexport
+  source "$ENV_PATH"
+  set +o allexport
+else
+  echo "❌ .env файл не найден: $ENV_PATH" >&2
+  exit 1
+fi
+
+# === КОНСТАНТЫ ===
+MAX_CHARS=3800  # максимум символов в сообщении
+
+# === ПАРСИМ АРГУМЕНТЫ ===
+MESSAGE_TEXT=""
+while getopts "m:" opt; do
+  case ${opt} in
+    m ) MESSAGE_TEXT="$OPTARG" ;;
+  esac
+done
+
+# === ОБРАБОТКА STDIN ===
+STDIN_CONTENT=""
+if ! [ -t 0 ]; then
+  STDIN_CONTENT=$(cat)
+  STDIN_CONTENT="${STDIN_CONTENT: -$MAX_CHARS}"  # последние $MAX_CHARS символов
+fi
+
+# === ФОРМИРОВАНИЕ СООБЩЕНИЯ ===
+USER_NAME="$(whoami)"
+HOST_NAME="$(hostname)"
+TELEGRAM_MSG="🔔Новое уведомление от ${USER_NAME}@${HOST_NAME}"
+
+if [ -n "$MESSAGE_TEXT" ]; then
+  TELEGRAM_MSG+="
+\"$MESSAGE_TEXT\""
+fi
+
+if [ -n "$STDIN_CONTENT" ]; then
+  TELEGRAM_MSG+="
+
+⚠️ Показаны только последние ${MAX_CHARS} символов входящего вывода:
+
+\`\`\`
+$STDIN_CONTENT
+\`\`\`"
+fi
+
+# === ОТПРАВКА СООБЩЕНИЯ ===
+curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+  -d chat_id="$CHAT_ID" \
+  -d text="$TELEGRAM_MSG" \
+  -d parse_mode="Markdown"
