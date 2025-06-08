@@ -6,16 +6,17 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
-alias lpc='{{ .chezmoi.homeDir }}/Documents/scripts/list-path-content.sh'
-alias dockerup='{{ .chezmoi.homeDir }}/Documents/scripts/start-docker.sh'
-alias tg-alert='{{ .chezmoi.homeDir }}/Documents/scripts/my-linux-scripts/tg-alert.sh'
-alias karma='{{ .chezmoi.homeDir }}/projects/revolut/Credit/karma'
+alias lpc='{{ .chezmoi.homeDir }}/scripts/list-path-content.sh'
+alias dockerup='{{ .chezmoi.homeDir }}/scripts/start-docker.sh'
+alias tg-alert='{{ .chezmoi.homeDir }}/scripts/tg-alert.sh'
 alias tmpclear='rm -rf {{ .chezmoi.homeDir }}/tmp/*'
-alias wpc='{{ .chezmoi.homeDir }}/Documents/scripts/write-path-content.sh'
+alias wpc='{{ .chezmoi.homeDir }}/scripts/write-path-content.sh'
 alias sourcezsh='source ~/.zshrc'
 alias wdiff='git diff master...HEAD > {{ .chezmoi.homeDir }}/tmp/git-diff.txt'
 
 {{ if hasPrefix .chezmoi.hostname "REV" }}
+alias karma='{{ .chezmoi.homeDir }}/projects/revolut/Credit/karma'
+
 # GCP Dev
 alias gdbunnel='f() { gcloud beta compute ssh db-core-2 --internal-ip --project=revolut-dev-dbs -- -L 5432:localhost:5432 };f'
 alias glist='gcloud --project=revolut-dev-apps compute instances list'
@@ -49,9 +50,8 @@ glsearch() {
   | grep "${expression}" -C50 \
   | less
 }
+
 {{ end }}
-
-
 # Misc
 alias uncommit='git reset --soft HEAD^'
 
