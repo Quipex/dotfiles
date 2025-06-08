@@ -80,10 +80,6 @@ if.app-name-regex-substring = 'trello'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'quicktime'
-run = 'layout floating'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'discord'
 run = 'layout floating'
 
@@ -100,12 +96,12 @@ preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 20
-inner.vertical =   20
-outer.left =       20
-outer.bottom =     20
+inner.horizontal = 10
+inner.vertical =   10
+outer.left =       10
+outer.bottom =     10
 outer.top =        10
-outer.right =      20
+outer.right =      10
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -127,15 +123,6 @@ outer.right =      20
 # All possible modifiers: cmd, alt, ctrl, shift
 
 # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
-
-# See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-# You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
-alt-enter = '''exec-and-forget osascript -e '
-tell application "Terminal"
-    do script
-    activate
-end tell'
-'''
 
 alt-ctrl-shift-f = 'fullscreen'
 alt-ctrl-f = 'layout floating tiling'
@@ -166,18 +153,28 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
+alt-b = 'workspace 𝙱̲rowsing'
+alt-shift-b = 'move-node-to-workspace 𝙱̲rowsing'
+alt-c = 'workspace 𝙲̲ommunication'
+alt-shift-c = 'move-node-to-workspace 𝙲̲ommunication'
+alt-d = 'workspace 𝙳̲evelopment'
+alt-shift-d = 'move-node-to-workspace 𝙳̲evelopment'
+alt-m = 'workspace 𝙼̲usic'
+alt-shift-m = 'move-node-to-workspace 𝙼̲usic'
+alt-o = 'workspace 𝙾̲ther'
+alt-shift-o = 'move-node-to-workspace 𝙾̲ther'
+alt-1 = 'workspace Project_𝟷̲'
+alt-shift-1 = 'move-node-to-workspace Project_𝟷̲'
+alt-2 = 'workspace Project_𝟸̲'
+alt-shift-2 = 'move-node-to-workspace Project_𝟸̲'
+alt-3 = 'workspace Project_𝟹̲'
+alt-shift-3 = 'move-node-to-workspace Project_𝟹̲'
+alt-4 = 'workspace Project_𝟺̲'
+alt-shift-4 = 'move-node-to-workspace Project_𝟺̲'
+alt-5 = 'workspace Project_𝟻̲'
+alt-shift-5 = 'move-node-to-workspace Project_𝟻̲'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
-alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
-alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
-alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
-alt-shift-5 = 'move-node-to-workspace 5 --focus-follows-window'
+alt-w = 'close'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -186,14 +183,12 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode apps'
 
-alt-t = 'exec-and-forget open -a /Applications/Telegram.app'
-alt-a = 'exec-and-forget open -a /Applications/Arc.app'
-alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
-alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'
-alt-s = 'exec-and-forget open -a /Applications/Safari.app'
-alt-q = 'exec-and-forget open -a /System/Applications/QuickTime Player.app'
-alt-w = 'exec-and-forget open -a /Applications/WezTerm.app'
-
+alt-t = '''exec-and-forget osascript -e '
+tell application "Terminal"
+    do script
+    activate
+end tell'
+'''
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -204,7 +199,7 @@ f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling
 backspace = ['close-all-windows-but-current', 'mode main']
 
 [mode.apps.binding]
-alt-w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
+alt-r = ['mode main']
 
 # [workspace-to-monitor-force-assignment]
 #     1 = '^dell$'
