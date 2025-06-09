@@ -66,6 +66,18 @@ sketchybar --add bracket front_app_bracket \
     front_app.name \
     --subscribe front_app front_app_switched
 
+sketchybar --add event aerospace_workspace_change
+
+SPACE_NAME="aerospace-space"
+
+sketchybar --add item $SPACE_NAME left \
+    --subscribe $SPACE_NAME aerospace_workspace_change \
+    --set $SPACE_NAME \
+    background.padding_left=5 \
+    label.font="$FONT_FACE:Bold:12.0" \
+    label="$(aerospace list-workspaces --focused)" \
+    script="$CONFIG_DIR/plugins/aerospace.sh $SPACE_NAME"
+
 sketchybar --add item clock right \
     --set clock \
     icon=󰃰 \
