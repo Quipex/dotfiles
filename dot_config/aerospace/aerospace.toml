@@ -3,7 +3,9 @@ after-startup-command = ['exec-and-forget sketchybar']
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = ['/bin/bash', '-c',
   'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
-  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+  # JankyBorders has a built-in detection of already running process,
+  # so it won't be run twice on AeroSpace restart
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0' 
 ]
 
 # Start AeroSpace at login
@@ -49,7 +51,7 @@ automatically-unhide-macos-hidden-apps = false
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'slack'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # Possible values: (qwerty|dvorak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
@@ -121,26 +123,26 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-b = 'workspace 𝙱̲rowsing'
-alt-shift-b = 'move-node-to-workspace 𝙱̲rowsing'
-alt-c = 'workspace 𝙲̲ommunication'
-alt-shift-c = 'move-node-to-workspace 𝙲̲ommunication'
-alt-d = 'workspace 𝙳̲evelopment'
-alt-shift-d = 'move-node-to-workspace 𝙳̲evelopment'
-alt-m = 'workspace 𝙼̲usic'
-alt-shift-m = 'move-node-to-workspace 𝙼̲usic'
-alt-o = 'workspace 𝙾̲ther'
-alt-shift-o = 'move-node-to-workspace 𝙾̲ther'
-alt-1 = 'workspace Project_𝟷̲'
-alt-shift-1 = 'move-node-to-workspace Project_𝟷̲'
-alt-2 = 'workspace Project_𝟸̲'
-alt-shift-2 = 'move-node-to-workspace Project_𝟸̲'
-alt-3 = 'workspace Project_𝟹̲'
-alt-shift-3 = 'move-node-to-workspace Project_𝟹̲'
-alt-4 = 'workspace Project_𝟺̲'
-alt-shift-4 = 'move-node-to-workspace Project_𝟺̲'
-alt-5 = 'workspace Project_𝟻̲'
-alt-shift-5 = 'move-node-to-workspace Project_𝟻̲'
+alt-b = 'workspace Browsing'
+alt-shift-b = 'move-node-to-workspace Browsing'
+alt-c = 'workspace Communication'
+alt-shift-c = 'move-node-to-workspace Communication'
+alt-d = 'workspace Development'
+alt-shift-d = 'move-node-to-workspace Development'
+alt-m = 'workspace Music'
+alt-shift-m = 'move-node-to-workspace Music'
+alt-o = 'workspace Other'
+alt-shift-o = 'move-node-to-workspace Other'
+alt-1 = 'workspace Project_1'
+alt-shift-1 = 'move-node-to-workspace Project_1'
+alt-2 = 'workspace Project_2'
+alt-shift-2 = 'move-node-to-workspace Project_2'
+alt-3 = 'workspace Project_3'
+alt-shift-3 = 'move-node-to-workspace Project_3'
+alt-4 = 'workspace Project_4'
+alt-shift-4 = 'move-node-to-workspace Project_4'
+alt-5 = 'workspace Project_5'
+alt-shift-5 = 'move-node-to-workspace Project_5'
 
 alt-w = 'close'
 
