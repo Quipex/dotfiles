@@ -7,7 +7,7 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 ]
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -48,40 +48,8 @@ automatically-unhide-macos-hidden-apps = false
 # run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'telegram'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'finder'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'safari'
-run = 'layout floating'
- 
-[[on-window-detected]]
-if.app-name-regex-substring = 'camera'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'elgato'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'dicord'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'mail'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'trello'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'discord'
-run = 'layout floating'
+if.app-name-regex-substring = 'slack'
+run = ['layout floating', 'move-node-to-workspace-𝙱̲rowsing']
 
 # Possible values: (qwerty|dvorak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
@@ -127,10 +95,10 @@ outer.right =      10
 alt-ctrl-shift-f = 'fullscreen'
 alt-ctrl-f = 'layout floating tiling'
 
-alt-shift-left = 'join-with left'
-alt-shift-down = 'join-with down'
-alt-shift-up = 'join-with up'
-alt-shift-right = 'join-with right'
+alt-shift-ctrl-h = 'join-with left'
+alt-shift-ctrl-j = 'join-with down'
+alt-shift-ctrl-k = 'join-with up'
+alt-shift-ctrl-l = 'join-with right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'

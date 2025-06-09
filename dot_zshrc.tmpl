@@ -14,7 +14,7 @@ alias wpc='{{ .chezmoi.homeDir }}/scripts/write-path-content.sh'
 alias sourcezsh='source ~/.zshrc'
 alias wdiff='git diff master...HEAD > {{ .chezmoi.homeDir }}/tmp/git-diff.txt'
 
-{{ if hasPrefix .chezmoi.hostname "REV" }}
+{{ if hasPrefix "REV" .chezmoi.hostname }}
 alias karma='{{ .chezmoi.homeDir }}/projects/revolut/Credit/karma'
 
 # GCP Dev

@@ -1,28 +1,29 @@
----
 - name: Machine setup
   hosts: localhost
-  become: true
   connection: local
   gather_facts: true
   tasks:
+    - name: Determine Homebrew path
+      set_fact:
+        brew_path: "{{ '/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew' }}"
+
     - name: Check if Homebrew is installed
       stat:
-        path: /opt/homebrew/bin/brew
+        path: "{{ brew_path }}"
       register: brew_check
-      when: ansible_architecture == "arm64"
-
-    - name: Check if Homebrew is installed (Intel Macs)
-      stat:
-        path: /usr/local/bin/brew
-      register: brew_check
-      when: ansible_architecture != "arm64"
 
     - name: Install Homebrew if missing
       shell: |
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       args:
-        creates: "{{ brew_check.stat.path | default('/opt/homebrew/bin/brew') }}"
+        creates: "{{ brew_path }}"
       when: not brew_check.stat.exists and ansible_os_family == "Darwin"
+    
+    - name: Tap FelixKratz/formulae
+      community.general.homebrew_tap:
+        name: FelixKratz/formulae
+        state: present
+      when: ansible_os_family == "Darwin"
 
     - name: Install Homebrew formulae
       community.general.homebrew:
@@ -34,6 +35,8 @@
           - ripgrep
           - tmux
           - age
+          - borders
+          - sketchybar
         state: present
       when: ansible_os_family == "Darwin"
 
@@ -42,19 +45,9 @@
         name:
           - aerospace
           - font-jetbrains-mono-nerd-font
+          - font-hack-nerd-font
           - linearmouse
           - maccy
         state: present
       when: ansible_os_family == "Darwin"
-    
-    - name: Tap FelixKratz/formulae
-      community.general.homebrew_tap:
-        name: FelixKratz/formulae
-        state: present
-      when: ansible_os_family == "Darwin"
-
-    - name: Install borders
-      community.general.homebrew:
-        name: borders
-        state: present
-      when: ansible_os_family == "Darwin"
+      
