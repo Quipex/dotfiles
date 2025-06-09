@@ -4,8 +4,6 @@ FONT_FACE="JetBrainsMono Nerd Font"
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins-desktop"
 PLUGIN_SHARED_DIR="$HOME/.config/sketchybar/plugins"
 
-SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
-
 sketchybar --bar \
     height=32 \
     color=0x66494d64 \
@@ -74,16 +72,6 @@ sketchybar --add item clock right \
     background.color=0xffed8796 \
     update_freq=10 \
     script="$PLUGIN_SHARED_DIR/clock.sh"
-
-sketchybar --add event spotify_change $SPOTIFY_EVENT \
-    --add item spotify right \
-    --set spotify \
-    icon= \
-    icon.y_offset=1 \
-    label.drawing=off \
-    label.padding_left=3 \
-    script="$PLUGIN_DIR/spotify.sh" \
-    --subscribe spotify spotify_change mouse.clicked
 
 ##### Finalizing Setup #####
 sketchybar --update
