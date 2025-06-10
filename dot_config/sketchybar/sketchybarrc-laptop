@@ -82,7 +82,7 @@ SPACE_NAME="aerospace-space"
 sketchybar --add item $SPACE_NAME left \
     --subscribe $SPACE_NAME aerospace_workspace_change \
     --set $SPACE_NAME \
-    background.padding_left=5 \
+    background.padding_left=10 \
     label.font="$FONT_FACE:Bold:12.0" \
     label="$(aerospace list-workspaces --focused)" \
     script="$CONFIG_DIR/plugins/aerospace.sh $SPACE_NAME"
@@ -105,6 +105,13 @@ sketchybar --add item volume right \
     label.drawing=true \
     script="$PLUGIN_SHARED_DIR/volume.sh" \
     --subscribe volume volume_change
+
+# Language Indicator
+sketchybar --add item keyboard_layout right \
+    --set keyboard_layout \
+    update_freq=10 \
+    background.padding_right=5 \
+    script="$PLUGIN_SHARED_DIR/language.sh"
 
 # osascript -e 'quit app "Rectangle"'
 # open -a Rectangle

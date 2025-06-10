@@ -164,7 +164,7 @@ f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling
 backspace = ['close-all-windows-but-current', 'mode main']
 
 [mode.apps.binding]
-alt-r = ['mode main']
+alt-w = ['mode main']
 
 # [workspace-to-monitor-force-assignment]
 #     1 = '^dell$'
