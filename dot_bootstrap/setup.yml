@@ -48,6 +48,8 @@
           - font-hack-nerd-font
           - linearmouse
           - maccy
+          - wezterm
+          - raycast
         state: present
       when: ansible_os_family == "Darwin"
       
