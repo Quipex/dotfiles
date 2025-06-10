@@ -2,6 +2,10 @@
 
 ICON_PADDING_RIGHT=5
 
+if [[ -z "$INFO" ]]; then
+    return 0
+fi
+
 case $INFO in
 "Arc")
     ICON_PADDING_RIGHT=5

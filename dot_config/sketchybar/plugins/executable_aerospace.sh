@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-sketchybar --set $NAME label=$FOCUSED_WORKSPACE
+if [[ -z "$FOCUSED_WORSPACE" ]]; then
+    FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
+fi
+
+sketchybar --set "$NAME" label="$FOCUSED_WORKSPACE"

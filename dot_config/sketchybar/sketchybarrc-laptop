@@ -77,15 +77,12 @@ sketchybar --add bracket front_app_bracket \
 
 sketchybar --add event aerospace_workspace_change
 
-SPACE_NAME="aerospace-space"
-
-sketchybar --add item $SPACE_NAME left \
-    --subscribe $SPACE_NAME aerospace_workspace_change \
-    --set $SPACE_NAME \
+sketchybar --add item aerospace-space left \
+    --subscribe aerospace-space aerospace_workspace_change \
+    --set aerospace-space \
     background.padding_left=10 \
     label.font="$FONT_FACE:Bold:12.0" \
-    label="$(aerospace list-workspaces --focused)" \
-    script="$CONFIG_DIR/plugins/aerospace.sh $SPACE_NAME"
+    script="$PLUGIN_SHARED_DIR/aerospace.sh"
 
 sketchybar --add item clock right \
     --set clock \
@@ -109,7 +106,7 @@ sketchybar --add item volume right \
 # Language Indicator
 sketchybar --add item keyboard_layout right \
     --set keyboard_layout \
-    update_freq=10 \
+    update_freq=1 \
     background.padding_right=5 \
     script="$PLUGIN_SHARED_DIR/language.sh"
 
