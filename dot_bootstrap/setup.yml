@@ -28,6 +28,7 @@
     - name: Install Homebrew formulae
       community.general.homebrew:
         name:
+          - git
           - colima
           - docker
           - htop
@@ -50,6 +51,12 @@
           - maccy
           - wezterm
           - raycast
+          - obsidian
+          - telegram
+          - visual-studio-code
+          - intellij-idea
+          - keepassxc
+          - google-drive
         state: present
       when: ansible_os_family == "Darwin"
       
