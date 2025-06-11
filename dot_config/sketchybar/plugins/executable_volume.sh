@@ -1,18 +1,10 @@
 #!/usr/bin/env zsh
 
-function mylog() {
-  # Проверяем, существует ли директория ~/tmp
-  # Если нет, создаем ее
-  mkdir -p ~/tmp
+if [[ -z "$INFO" ]]; then
+    INFO=$(osascript -e "output volume of (get volume settings)")
+fi
 
-  # Записываем сообщение в файл ~/tmp/logs
-  # -e позволяет интерпретировать escape-последовательности, хотя здесь это не критично
-  # >> добавляет вывод в конец файла, не перезаписывая его
-  echo "[volume] $@" >> ~/tmp/logs
-}
-
-mylog "INFO=$INFO"
-
+mylog "NEW_INFO=$INFO"
 
 case ${INFO} in
 0)
@@ -29,4 +21,4 @@ case ${INFO} in
     ;;
 esac
 
-sketchybar --set $NAME icon=$ICON icon.padding_right=$ICON_PADDING_RIGHT label="$INFO%"
+sketchybar --set $NAME icon=$ICON icon.padding_right=$ICON_PADDING_RIGHT label="$INFO"

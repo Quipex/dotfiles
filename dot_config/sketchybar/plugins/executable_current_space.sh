@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+if [[ -z "$INFO" ]]; then
+    return 0;
+fi
+
 update_space() {
     SPACE_ID=$(echo "$INFO" | jq -r '."display-1"')
 
