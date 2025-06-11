@@ -6,7 +6,7 @@ PLUGIN_DIR="$HOME/.config/sketchybar/plugins-laptop"
 PLUGIN_SHARED_DIR="$HOME/.config/sketchybar/plugins"
 
 sketchybar --bar \
-    height=32 \
+    height=36 \
     color=0x40000000 \
     margin=0 \
     sticky=on \
@@ -80,8 +80,10 @@ sketchybar --add event aerospace_workspace_change
 sketchybar --add item aerospace-space left \
     --subscribe aerospace-space aerospace_workspace_change \
     --set aerospace-space \
-    background.padding_left=10 \
+    background.padding_left=5 \
     label.font="$FONT_FACE:Bold:12.0" \
+    icon.padding_left=5 \
+    icon.padding_right=0 \
     script="$PLUGIN_SHARED_DIR/aerospace.sh"
 
 sketchybar --add item clock right \
@@ -108,6 +110,8 @@ sketchybar --add item keyboard_layout right \
     --set keyboard_layout \
     update_freq=1 \
     background.padding_right=5 \
+    icon.padding_left=5 \
+    icon.padding_right=0 \
     script="$PLUGIN_SHARED_DIR/language.sh"
 
 # osascript -e 'quit app "Rectangle"'
