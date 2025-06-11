@@ -17,7 +17,7 @@ local config = {
 	-- window_background_opacity = 1.0,
 	-- window_background_opacity = 0.78,
 	-- window_background_opacity = 0.20,
-	window_decorations = 'RESIZE',
+	-- window_decorations = 'RESIZE',
 	keys = {
 		{
 			key = 'q',
