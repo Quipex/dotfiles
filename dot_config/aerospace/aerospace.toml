@@ -154,7 +154,8 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 alt-shift-enter = 'mode apps'
 
-alt-t = 'exec-and-forget open -a /Applications/WezTerm.app'
+# alt-t = 'exec-and-forget open -a /Applications/WezTerm.app'
+alt-t = 'exec-and-forget wezterm cli spawn --new-window'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
