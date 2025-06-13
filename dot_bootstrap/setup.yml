@@ -53,10 +53,11 @@
           - raycast
           - obsidian
           - telegram
-          - visual-studio-code
-          - intellij-idea
-          - keepassxc
-          - google-drive
+          # - visual-studio-code
+          # - intellij-idea
+          # - keepassxc
+          # - google-drive
+          - hazeover
         state: present
       when: ansible_os_family == "Darwin"
       
