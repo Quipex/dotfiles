@@ -18,6 +18,7 @@ local config = {
         mods = "OPT",
         action = act.SendString("\x1bf")
     }},
+    window_decorations = "TITLE | RESIZE | MACOS_FORCE_ENABLE_SHADOW",
     mouse_bindings = { -- Ctrl-click will open the link under the mouse cursor
     {
         event = {
