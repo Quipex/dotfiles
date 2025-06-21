@@ -58,6 +58,7 @@
           # - keepassxc
           # - google-drive
           - hazeover
+          - hammerspoon
         state: present
       when: ansible_os_family == "Darwin"
       
