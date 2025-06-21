@@ -48,11 +48,11 @@
           - font-jetbrains-mono-nerd-font
           - font-hack-nerd-font
           - linearmouse
-          - maccy
+          # - maccy
           - wezterm
           - raycast
-          - obsidian
-          - telegram
+          # - obsidian
+          # - telegram
           # - visual-studio-code
           # - intellij-idea
           # - keepassxc
