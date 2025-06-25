@@ -4,16 +4,14 @@ if [[ -z "$INFO" ]]; then
     INFO=$(osascript -e "output volume of (get volume settings)")
 fi
 
-mylog "NEW_INFO=$INFO"
-
 case ${INFO} in
 0)
-    ICON=""
-    ICON_PADDING_RIGHT=21
+    ICON=""
+    ICON_PADDING_RIGHT=6
     ;;
 [0-9])
     ICON=""
-    ICON_PADDING_RIGHT=12
+    ICON_PADDING_RIGHT=6
     ;;
 *)
     ICON=""
