@@ -59,6 +59,7 @@
           # - google-drive
           - hazeover
           - hammerspoon
+          - obs
         state: present
       when: ansible_os_family == "Darwin"
       
