@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+source ./colors.sh
 
 FONT_FACE="JetBrainsMono Nerd Font"
 
@@ -7,7 +8,7 @@ PLUGIN_SHARED_DIR="$HOME/.config/sketchybar/plugins"
 
 sketchybar --bar \
     height=36 \
-    color=0xB3d670a7 \
+    color=0xB3$COLOR_VIOLET \
     margin=0 \
     sticky=on \
     padding_left=23 \
@@ -18,10 +19,10 @@ sketchybar --bar \
 
 # Alternative background colors
 # label.color=0xffffffff
-# background.color=0x9924273a
-# 494d64 - dark blue
+# background.color=0x99$COLOR_BLACK
+# $COLOR_DARK_BLUE - dark blue
 sketchybar --default \
-    background.color=0xff494d64 \
+    background.color=0xff$COLOR_DARK_BLUE \
     background.corner_radius=5 \
     background.padding_right=5 \
     background.height=26 \
@@ -29,28 +30,27 @@ sketchybar --default \
     icon.padding_left=5 \
     icon.padding_right=5 \
     label.font="$FONT_FACE:Medium:12.0" \
-    label.color=0xffcad3f5 \
+    label.color=0xff$COLOR_WHITE \
     label.y_offset=0 \
     label.padding_left=0 \
     label.padding_right=5
 
-# f5a97f - orange
 sketchybar --add item current_space left \
     --set current_space \
-    background.color=0xfff5a97f \
-    icon.color=0xff24273a \
+    background.color=0xff$COLOR_ORANGE \
+    icon.color=0xff$COLOR_BLACK \
     label.drawing=off \
     script="$PLUGIN_SHARED_DIR/current_space.sh" \
     --subscribe current_space space_change mouse.clicked
 
-# a6da95 - green
+# $COLOR_GREEN - green
 sketchybar --add item front_app left \
     --set front_app \
-    background.color=0xffa6da95 \
+    background.color=0xff$COLOR_GREEN \
     background.padding_left=0 \
     background.padding_right=0 \
     icon.y_offset=1 \
-    icon.color=0xff24273a \
+    icon.color=0xff$COLOR_BLACK \
     label.drawing=no \
     script="$PLUGIN_SHARED_DIR/front_app.sh" \
     --add item front_app.separator left \
@@ -58,7 +58,7 @@ sketchybar --add item front_app left \
     background.color=0x00000000 \
     background.padding_left=-3 \
     icon= \
-    icon.color=0xffa6da95 \
+    icon.color=0xff$COLOR_GREEN \
     icon.font="$FONT_FACE:Bold:20.0" \
     icon.padding_left=0 \
     icon.padding_right=0 \
@@ -91,11 +91,11 @@ sketchybar --add item blank1 left \
 sketchybar --add item aerospace-space left \
     --subscribe aerospace-space aerospace_workspace_change \
     --set aerospace-space \
-    background.color=0xffa6da95 \
+    background.color=0xff$COLOR_GREEN \
     background.padding_left=0 \
     background.padding_right=0 \
     icon.y_offset=1 \
-    icon.color=0xff24273a \
+    icon.color=0xff$COLOR_BLACK \
     label.drawing=no \
     script="$PLUGIN_SHARED_DIR/aerospace.sh" \
     --add item aerospace-space.separator left \
@@ -103,7 +103,7 @@ sketchybar --add item aerospace-space left \
     background.color=0x00000000 \
     background.padding_left=-3 \
     icon= \
-    icon.color=0xffa6da95 \
+    icon.color=0xff$COLOR_GREEN \
     icon.font="$FONT_FACE:Bold:20.0" \
     icon.padding_left=0 \
     icon.padding_right=0 \
@@ -125,7 +125,7 @@ sketchybar --add bracket aerospace-space-bracket \
 sketchybar --add item clock right \
     --set clock \
     icon=󰃰 \
-    icon.color=0xffed8796 \
+    icon.color=0xff$COLOR_RED \
     update_freq=10 \
     script="$PLUGIN_SHARED_DIR/clock.sh"
 
@@ -136,7 +136,7 @@ sketchybar --add item battery right \
 
 sketchybar --add item volume right \
     --set volume \
-    icon.color=0xff8aadf4 \
+    icon.color=0xff$COLOR_LIGHT_BLUE \
     label.drawing=true \
     script="$PLUGIN_SHARED_DIR/volume.sh" \
     --subscribe volume volume_change
