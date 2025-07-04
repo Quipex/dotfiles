@@ -60,7 +60,6 @@
           - hazeover
           - hammerspoon
           - obs
-          - structured
           - ticktick
         state: present
       when: ansible_os_family == "Darwin"
