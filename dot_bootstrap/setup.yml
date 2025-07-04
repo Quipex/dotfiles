@@ -3,6 +3,12 @@
   connection: local
   gather_facts: true
   tasks:
+    - name: Install nvm
+      ansible.builtin.shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
     - name: Determine Homebrew path
       set_fact:
         brew_path: "{{ '/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew' }}"
