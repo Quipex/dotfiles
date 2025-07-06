@@ -88,11 +88,16 @@ preset = 'qwerty'
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        [{ monitor."built-in" = 15}, 45]
-outer.right =      10
+inner.vertical   = 10
+outer.left       = 10
+outer.bottom     = 10
+# Подсчет safeAreaInsets.top через AppleScript JS с помощью externalCommand
+{{- $inset := (output "osascript" "-l" "JavaScript" "-e" "ObjC.import(\"AppKit\"); $.NSScreen.mainScreen.safeAreaInsets.top;") | trim | atoi -}}
+# Вычисляем желаемый отступ: 46 - inset, но не меньше нуля
+{{- $offset := max 0 (sub 46 $inset) -}}
+# Динамический отступ для встроенного монитора и статический для остальных
+outer.top = [ { monitor."built-in" = {{ $offset }} }, 45 ]
+outer.right     = 10
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
