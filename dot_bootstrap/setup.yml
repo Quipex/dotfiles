@@ -44,6 +44,7 @@
           - age
           - borders
           - sketchybar
+          - gpg
         state: present
       when: ansible_os_family == "Darwin"
 

@@ -1,3 +1,4 @@
-encryption = "age"
-[age]
-  passphrase = true
+encryption = "gpg"
+
+[gpg]
+  recipient = "C734BDA0CD5BD2E204E163F26E6BEB249BD755C2"
