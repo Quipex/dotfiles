@@ -137,10 +137,10 @@
 
   # ===== Arch Linux =============================================
   - name: Обновить кэш pacman
-    ansible.builtin.pacman:
-      update_cache: yes
+    community.general.pacman:
+      update_cache: true
       cache_valid_time: 3600
-    become: yes
+    become: true
     when: ansible_os_family == "Archlinux"
 
   - name: Установить nvm из репозитория Arch
