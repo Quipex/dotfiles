@@ -65,6 +65,7 @@
       - nerd-fonts-jetbrains-mono
       - nerd-fonts-hack
       - ticktick-bin
+      - sdkman-bin
 
     # ---------- Fedora ----------
     dnf_packages:
