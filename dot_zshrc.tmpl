@@ -7,57 +7,13 @@ HIST_STAMPS="dd.mm.yyyy"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
-# Aliases
-alias lpc='{{ .chezmoi.homeDir }}/scripts/list-path-content.sh'
-alias dockerup='{{ .chezmoi.homeDir }}/scripts/start-docker.sh'
-alias tg-alert='{{ .chezmoi.homeDir }}/scripts/tg-alert.sh'
-alias tmpclear='rm -rf {{ .chezmoi.homeDir }}/tmp/*'
-alias wpc='{{ .chezmoi.homeDir }}/scripts/write-path-content.sh'
-alias sourcezsh='source ~/.zshrc'
-alias wdiff='git diff master...HEAD > {{ .chezmoi.homeDir }}/tmp/git-diff.txt'
-alias tokenize='python3 -c "import sys,tiktoken; print(len(tiktoken.get_encoding(\"cl100k_base\").encode(sys.stdin.read())))"'
+source "$HOME/zsh/alias.zsh"
 
 {{ if hasPrefix "REV" .chezmoi.hostname }}
-alias karma='{{ .chezmoi.homeDir }}/projects/revolut/Credit/karma'
 
-# GCP Dev
-alias gdbunnel='f() { gcloud beta compute ssh db-core-2 --internal-ip --project=revolut-dev-dbs -- -L 5432:localhost:5432 };f'
-alias glist='gcloud --project=revolut-dev-apps compute instances list'
-alias gash='f() { gcloud --project=revolut-dev-apps beta compute ssh "$1" --internal-ip };f'
-alias glistdb='gcloud --project=revolut-dev-dbs compute instances list'
-alias gashdb='f() { gcloud --project=revolut-dev-dbs beta compute ssh "$1" --internal-ip };f'
-alias gunnel='f() { ssh -L "$1":"$2":"$3" jumper-revolut-dev-apps -N };f'
-
-# GCP Prod
-alias glistp='gcloud --project=revolut-prod-apps compute instances list'
-alias gashp='f() { gcloud --project=revolut-prod-apps beta compute ssh "$1" --internal-ip };f'
-alias glistdbp='gcloud --project=revolut-prod-dbs compute instances list'
-alias gashdbp='f() { gcloud --project=revolut-prod-dbs beta compute ssh "$1" --internal-ip };f'
-alias gunnelp='f() { ssh -L "$1":"$2":"$3" jumper-revolut-prod-apps -N };f'
-
-# Logs
-alias glogs='f() { gcloud logging read "logName=projects/revolut-prod-apps/logs/$1" --freshness=$2 --project=revolut-prod-apps --format="value(timestamp,severity,textPayload)" };f'
-alias ggrep='f() { gcloud logging read "logName=projects/revolut-prod-apps/logs/$1" --freshness=$2 --project=revolut-prod-apps --format="value(timestamp,severity,textPayload)" | grep "$3" -C50 | less };f'
-
-glsearch() {
-  local service_name="$1"
-  local date="$2"
-  local expression="$3"
-
-  gcloud logging read \
-    "logName=projects/revolut-dev-apps/logs/${service_name} AND \
-     timestamp >= \"${date}T00:00:00.000Z\" AND \
-     timestamp <= \"${date}T23:59:59.000Z\"" \
-    --format json \
-  | jq '.[] | .textPayload' \
-  | grep "${expression}" -C50 \
-  | less
-}
+source "$HOME/zsh/rev.zsh"
 
 {{ end }}
-# Misc
-alias uncommit='git reset --soft HEAD^'
-alias ynab-convert='{{ .chezmoi.homeDir }}/Documents/Coding/ynab-imports-automation/convert-csv.sh'
 
 export GPG_TTY=$(tty)
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
