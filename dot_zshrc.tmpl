@@ -17,7 +17,10 @@ source "$HOME/zsh/rev.zsh"
 
 export GPG_TTY=$(tty)
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+
+{{- if eq .chezmoi.os "darwin" }}
 export DOCKER_HOST="unix://${HOME}/.colima/docker.sock"
+{{- end}}
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
