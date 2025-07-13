@@ -172,7 +172,7 @@
     aur:
       name: yay
       state: present
-    become: yes          # yay собирается через sudo
+    become: yes
     when: ansible_os_family == "Archlinux"
 
   - name: Установить пакеты из AUR
