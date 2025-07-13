@@ -9,6 +9,10 @@ install_on_ubuntu() {
     sudo apt-get install -y ansible
 }
 
+install_on_arch() {
+    sudo pacman -Syu --noconfirm ansible
+}
+
 install_on_mac() {
     brew install ansible
 }
@@ -20,6 +24,8 @@ case "${OS}" in
             install_on_fedora
         elif [ -f /etc/lsb-release ]; then
             install_on_ubuntu
+        elif [ -f /etc/arch-release ]; then
+            install_on_arch
         else
             echo "Unsupported Linux distribution"
             exit 1
@@ -34,8 +40,6 @@ case "${OS}" in
         ;;
 esac
 
-
 ansible-playbook ~/.bootstrap/setup.yml --ask-become-pass
 
 echo "Ansible installation complete."
-
