@@ -1,73 +1,222 @@
-- name: Machine setup
+---
+- name: Кроссплатформенная настройка dev-среды (macOS, Arch, Fedora)
   hosts: localhost
-  connection: local
-  gather_facts: true
+  gather_facts: yes
+
+  #################################################################
+  #                    НЕОБХОДИМЫЕ КОЛЛЕКЦИИ                       #
+  #################################################################
+  collections:
+    - community.general          # brew_*, dnf, homebrew_cask …
+    - kewlfft.aur                # aur, makepkg, yay …
+
+  #################################################################
+  #                           ПЕРЕМЕННЫЕ                          #
+  #################################################################
+  vars:
+    # ---------- macOS ----------
+    brew_formulae:
+      - git
+      - colima
+      - docker
+      - htop
+      - neovim
+      - ripgrep
+      - tmux
+      - age
+      - borders
+      - sketchybar
+      - gpg
+
+    brew_casks:
+      - aerospace
+      - font-jetbrains-mono-nerd-font
+      - font-hack-nerd-font
+      - linearmouse          # только macOS
+      # - maccy
+      - wezterm
+      - raycast
+      # - obsidian
+      # - telegram
+      # - visual-studio-code
+      # - intellij-idea
+      # - keepassxc
+      # - google-drive
+      - hazeover
+      - hammerspoon
+      - obs
+      - ticktick
+
+    # ---------- Arch ----------
+    pacman_packages:
+      - git
+      - docker
+      - htop
+      - neovim
+      - ripgrep
+      - tmux
+      - age
+      - gnupg
+      - obs-studio
+      - alacritty
+      - rclone
+
+    aur_packages:
+      - nerd-fonts-jetbrains-mono
+      - nerd-fonts-hack
+      - ticktick-bin
+
+    # ---------- Fedora ----------
+    dnf_packages:
+      - git
+      - podman
+      - htop
+      - neovim
+      - ripgrep
+      - tmux
+      - age
+      - gnupg2
+      - wezterm
+      - obs-studio
+
+  #################################################################
+  #                             TASKИ                             #
+  #################################################################
   tasks:
-    - name: Install nvm
-      ansible.builtin.shell: >
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-      args:
-        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  # ===== macOS ===================================================
+  - name: Определить путь к brew (Intel vs Apple Silicon)
+    set_fact:
+      brew_path: "{{ '/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew' }}"
+    when: ansible_os_family == "Darwin"
 
-    - name: Determine Homebrew path
-      set_fact:
-        brew_path: "{{ '/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew' }}"
+  - name: Проверить наличие Homebrew
+    stat:
+      path: "{{ brew_path }}"
+    register: brew_check
+    when: ansible_os_family == "Darwin"
 
-    - name: Check if Homebrew is installed
-      stat:
-        path: "{{ brew_path }}"
-      register: brew_check
+  - name: Установить Homebrew (если отсутствует)
+    shell: /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash"
+    args:
+      creates: "{{ brew_path }}"
+    become: false
+    when:
+      - ansible_os_family == "Darwin"
+      - not brew_check.stat.exists
 
-    - name: Install Homebrew if missing
-      shell: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      args:
-        creates: "{{ brew_path }}"
-      when: not brew_check.stat.exists and ansible_os_family == "Darwin"
-    
-    - name: Tap FelixKratz/formulae
-      community.general.homebrew_tap:
-        name: FelixKratz/formulae
-        state: present
-      when: ansible_os_family == "Darwin"
+  - name: Tap FelixKratz/formulae
+    community.general.homebrew_tap:
+      name: FelixKratz/formulae
+      state: present
+    become: false
+    when: ansible_os_family == "Darwin"
 
-    - name: Install Homebrew formulae
-      community.general.homebrew:
-        name:
-          - git
-          - colima
-          - docker
-          - htop
-          - neovim
-          - ripgrep
-          - tmux
-          - age
-          - borders
-          - sketchybar
-          - gpg
-        state: present
-      when: ansible_os_family == "Darwin"
+  - name: Установить brew-формулы
+    community.general.homebrew:
+      name: "{{ brew_formulae }}"
+      state: present
+    become: false
+    when: ansible_os_family == "Darwin"
 
-    - name: Install Homebrew casks
-      community.general.homebrew_cask:
-        name:
-          - aerospace
-          - font-jetbrains-mono-nerd-font
-          - font-hack-nerd-font
-          - linearmouse
-          # - maccy
-          - wezterm
-          - raycast
-          # - obsidian
-          # - telegram
-          # - visual-studio-code
-          # - intellij-idea
-          # - keepassxc
-          # - google-drive
-          - hazeover
-          - hammerspoon
-          - obs
-          - ticktick
-        state: present
-      when: ansible_os_family == "Darwin"
-      
+  - name: Установить brew-casks
+    community.general.homebrew_cask:
+      name: "{{ brew_casks }}"
+      state: present
+    become: false
+    when: ansible_os_family == "Darwin"
+
+  # ===== nvm (macOS + Fedora) ====================================
+  - name: Установить nvm через официальный скрипт (macOS / Fedora)
+    ansible.builtin.shell: >
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+    args:
+      creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    become: false
+    when: ansible_os_family == "Darwin" or ansible_distribution == "Fedora"
+
+  # ===== Arch Linux =============================================
+  - name: Обновить кэш pacman
+    ansible.builtin.pacman:
+      update_cache: yes
+      cache_valid_time: 3600
+    become: yes
+    when: ansible_os_family == "Archlinux"
+
+  - name: Установить nvm из репозитория Arch
+    ansible.builtin.pacman:
+      name: nvm
+      state: present
+    become: yes
+    when: ansible_os_family == "Archlinux"
+
+  - name: Инициализировать nvm в .bashrc (Arch + Fedora)
+    ansible.builtin.blockinfile:
+      path: "{{ ansible_env.HOME }}/.bashrc"
+      create: yes
+      marker: "# {mark} ANSIBLE MANAGED NVM"
+      block: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "/usr/share/nvm/init-nvm.sh" ] && . "/usr/share/nvm/init-nvm.sh"
+    become: false
+    when: ansible_os_family == "Archlinux" or ansible_distribution == "Fedora"
+
+  - name: Установить пакеты pacman
+    ansible.builtin.pacman:
+      name: "{{ pacman_packages }}"
+      state: present
+    become: yes
+    when: ansible_os_family == "Archlinux"
+
+  - name: Установить AUR-хелпер yay
+    aur:
+      name: yay
+      state: present
+    become: yes          # yay собирается через sudo
+    when: ansible_os_family == "Archlinux"
+
+  - name: Установить пакеты из AUR
+    aur:
+      name: "{{ aur_packages }}"
+      state: present
+    become: yes
+    when: ansible_os_family == "Archlinux"
+
+  - name: Включить и запустить Docker-демон
+    ansible.builtin.systemd:
+      name: docker
+      enabled: yes
+      state: started
+    become: yes
+    when: ansible_os_family == "Archlinux"
+
+  # ===== Fedora ==================================================
+  - name: Обновить кэш dnf
+    ansible.builtin.dnf:
+      update_cache: yes
+    become: yes
+    when: ansible_distribution == "Fedora"
+
+  - name: Подключить RPM Fusion (free + nonfree)
+    ansible.builtin.shell: |
+      dnf install -y \
+        https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm \
+        https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    args:
+      creates: "/etc/yum.repos.d/rpmfusion-free.repo"
+    become: yes
+    when: ansible_distribution == "Fedora"
+
+  - name: Установить пакеты dnf
+    ansible.builtin.dnf:
+      name: "{{ dnf_packages }}"
+      state: present
+    become: yes
+    when: ansible_distribution == "Fedora"
+
+  - name: Включить и запустить Podman
+    ansible.builtin.systemd:
+      name: podman
+      enabled: yes
+      state: started
+    become: yes
+    when: ansible_distribution == "Fedora"
