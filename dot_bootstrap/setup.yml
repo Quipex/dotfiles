@@ -136,13 +136,6 @@
     when: ansible_os_family == "Darwin" or ansible_distribution == "Fedora"
 
   # ===== Arch Linux =============================================
-  - name: Обновить кэш pacman
-    community.general.pacman:
-      update_cache: true
-      cache_valid_time: 3600
-    become: true
-    when: ansible_os_family == "Archlinux"
-
   - name: Установить nvm из репозитория Arch
     ansible.builtin.pacman:
       name: nvm
