@@ -1,10 +1,42 @@
 #!/bin/bash
 
-# .bootstrap/setup.yml hash: {{ include "dot_bootstrap/setup.yml" | sha256sum }}
+# .bootstrap/arch_setup.yml  hash: {{ include "dot_bootstrap/arch_setup.yml"  | sha256sum }}
+# .bootstrap/macos_setup.yml hash: {{ include "dot_bootstrap/macos_setup.yml" | sha256sum }}
 
-if command -v ansible-playbook &> /dev/null; then
-    ansible-galaxy collection install community.general
-    ansible-galaxy collection install kewlfft.aur
-    ansible-playbook {{ joinPath .chezmoi.sourceDir "dot_bootstrap/setup.yml" | quote }} -K
+set -euo pipefail
+
+# Абсолютный путь к каталогу dot_bootstrap в репо chezmoi (вычисляется при рендере)
+ANSIBLE_DIR="{{ joinPath .chezmoi.sourceDir "dot_bootstrap" }}"
+
+# Проверяем, установлен ли Ansible
+if ! command -v ansible-playbook >/dev/null 2>&1; then
+    echo "ansible-playbook not found, skipping bootstrap"
+    exit 0
 fi
+
+# Ставим необходимые коллекции (идемпотентно)
+ansible-galaxy collection install community.general
+ansible-galaxy collection install kewlfft.aur
+
+# Определяем целевой playbook по ОС
+case "$(uname -s)" in
+    Darwin)
+        PLAYBOOK="macos_setup.yml"
+        ;;
+    Linux)
+        if [[ -f /etc/arch-release ]]; then
+            PLAYBOOK="arch_setup.yml"
+        else
+            echo "Linux detected, but not Arch Linux — bootstrap playbook not defined."
+            exit 1
+        fi
+        ;;
+    *)
+        echo "Unsupported OS: $(uname -s)"
+        exit 1
+        ;;
+esac
+
+# Запуск выбранного playbook‑а
+ansible-playbook "${ANSIBLE_DIR}/${PLAYBOOK}" -K
 
