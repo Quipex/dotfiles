@@ -12,5 +12,5 @@ alias tokenize='python3 -c "import sys,tiktoken; print(len(tiktoken.get_encoding
 alias uncommit='git reset --soft HEAD^'
 alias ynab-convert='{{ .chezmoi.homeDir }}/Documents/Coding/ynab-imports-automation/convert-csv.sh'
 
-alias kill-idea="ps aux | grep \"IntelliJ IDEA\" | grep -v grep | awk '{print \$2}'"
+alias kill-idea="ps aux | grep \"IntelliJ IDEA\" | grep -v grep | awk '{print \$2}' | xargs kill"
 
