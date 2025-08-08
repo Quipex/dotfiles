@@ -1,0 +1,104 @@
+---
+- name: Настройка dev‑среды Arch Linux
+  hosts: localhost
+  gather_facts: yes
+
+  collections:
+    - community.general      # pacman, systemd …
+    - kewlfft.aur            # aur, yay …
+
+  vars:
+    pacman_packages:
+      - base-devel            # fakeroot, gcc, makepkg, …
+      - git
+      - docker
+      - htop
+      - neovim
+      - ripgrep
+      - tmux
+      - age
+      - gnupg
+      - obs-studio
+      - alacritty
+      - rclone
+
+    aur_packages:
+      - nerd-fonts-jetbrains-mono
+      - nerd-fonts-hack
+      - ticktick-bin
+      - sdkman-bin
+
+  tasks:
+    - name: Обновить кэш и систему
+      ansible.builtin.pacman:
+        update_cache: yes
+        upgrade: yes
+      become: yes
+
+    - name: Установить пакеты pacman
+      ansible.builtin.pacman:
+        name: "{{ pacman_packages }}"
+        state: present
+      become: yes
+
+    - name: Установить nvm
+      ansible.builtin.pacman:
+        name: nvm
+        state: present
+      become: yes
+
+    - name: Инициализировать nvm в .bashrc
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        create: yes
+        marker: "# {mark} ANSIBLE MANAGED NVM"
+        block: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "/usr/share/nvm/init-nvm.sh" ] && . "/usr/share/nvm/init-nvm.sh"
+
+    - name: Создать пользователя для сборки AUR
+      ansible.builtin.user:
+        name: aur_builder
+        groups: wheel
+        create_home: yes
+        shell: /bin/bash
+      become: yes
+
+    - name: Разрешить aur_builder sudo‑доступ к pacman без пароля
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/99-aur_builder
+        owner: root
+        group: root
+        mode: "0440"
+        content: |
+          aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman
+      become: yes
+      notify: Проверить sudoers
+
+    - name: Установить AUR‑хелпер yay
+      kewlfft.aur.aur:
+        name: yay
+        state: present
+      become: yes
+      become_user: aur_builder
+
+    - name: Установить пакеты из AUR
+      kewlfft.aur.aur:
+        name: "{{ aur_packages }}"
+        state: present
+        use: yay
+      become: yes
+      become_user: aur_builder
+
+    - name: Включить и запустить Docker‑демон
+      ansible.builtin.systemd:
+        name: docker
+        enabled: yes
+        state: started
+      become: yes
+
+  handlers:
+    - name: Проверить sudoers
+      ansible.builtin.command: /usr/sbin/visudo -cf /etc/sudoers.d/99-aur_builder
+      become: yes
+

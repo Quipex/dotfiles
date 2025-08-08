@@ -1,0 +1,93 @@
+---
+- name: Настройка dev-среды macOS
+  hosts: localhost
+  gather_facts: yes
+
+  collections:
+    - community.general
+
+  vars:
+    brew_formulae:
+      - git
+      - colima
+      - docker
+      - htop
+      - neovim
+      - ripgrep
+      - tmux
+      - age
+      - borders
+      - sketchybar
+      - gpg
+      - starship
+
+    brew_casks:
+      - aerospace
+      - font-jetbrains-mono-nerd-font
+      - font-hack-nerd-font
+      - linearmouse
+      - wezterm
+      - raycast
+      - hazeover
+      - hammerspoon
+      - obs
+      - ticktick
+      # - obsidian
+      # - telegram
+      # - visual-studio-code
+      # - intellij-idea
+      # - keepassxc
+      # - google-drive
+
+  tasks:
+    - name: Определить путь к brew (Intel vs Apple Silicon)
+      set_fact:
+        brew_path: "{{ '/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew' }}"
+      when: ansible_os_family == "Darwin"
+
+    - name: Проверить наличие Homebrew
+      stat:
+        path: "{{ brew_path }}"
+      register: brew_check
+      when: ansible_os_family == "Darwin"
+
+    - name: Установить Homebrew (если отсутствует)
+      shell: |
+        /bin/bash -c \
+        "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash"
+      args:
+        creates: "{{ brew_path }}"
+      become: false
+      when:
+        - ansible_os_family == "Darwin"
+        - not brew_check.stat.exists
+
+    - name: Tap FelixKratz/formulae (скетчбар и др.)
+      community.general.homebrew_tap:
+        name: FelixKratz/formulae
+        state: present
+      become: false
+      when: ansible_os_family == "Darwin"
+
+    - name: Установить brew-формулы
+      community.general.homebrew:
+        name: "{{ brew_formulae }}"
+        state: present
+      become: false
+      when: ansible_os_family == "Darwin"
+
+    - name: Установить brew-casks
+      community.general.homebrew_cask:
+        name: "{{ brew_casks }}"
+        state: present
+      become: false
+      when: ansible_os_family == "Darwin"
+
+    - name: Установить nvm
+      ansible.builtin.shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+      become: false
+      when: ansible_os_family == "Darwin"
+
