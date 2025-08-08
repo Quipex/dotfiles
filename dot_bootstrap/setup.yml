@@ -27,6 +27,7 @@
       - borders
       - sketchybar
       - gpg
+      - starship
 
     brew_casks:
       - aerospace

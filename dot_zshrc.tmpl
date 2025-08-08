@@ -1,44 +1,48 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+{{ if hasSuffix "arch" .chezmoi.hostname }}
+ZSH_THEME="arch"
+{{ else }}
 ZSH_THEME="crcandy"
+{{ end }}
 zstyle ':omz:update' mode reminder
 HIST_STAMPS="dd.mm.yyyy"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
+eval "$(starship init zsh)"
 
 source "$HOME/zsh/alias.zsh"
 
-{{- if hasPrefix "REV" .chezmoi.hostname }}
-
+{{ if hasPrefix "REV" .chezmoi.hostname }}
 source "$HOME/zsh/rev.zsh"
-
-{{- end }}
+{{ end }}
 
 export GPG_TTY=$(tty)
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 
-{{- if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" }}
 export DOCKER_HOST="unix://${HOME}/.colima/docker.sock"
-{{- end}}
+{{ end }}
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-{{- if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" }}
 
 # brew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-{{- end }}
+{{ end }}
 
 # SDKMAN
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # pipx-created paths
-export PATH="$PATH:{{ .chezmoi.homeDir }}/Library/Python/3.9/bin"
-export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
+export PATH="$PATH:$HOME/Library/Python/3.9/bin"
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
