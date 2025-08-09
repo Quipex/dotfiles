@@ -2,6 +2,7 @@
 
 -- Включаем возможность общаться с Hammerspoon из командной строки
 require('hs.ipc')
+require("sketchybar-restart")
 
 -- 1. Импортируем наш модуль.
 -- require() ищет файл 'window-manipulation.lua' в директории ~/.hammerspoon/
