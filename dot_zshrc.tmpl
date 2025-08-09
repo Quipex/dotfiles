@@ -10,7 +10,6 @@ zstyle ':omz:update' mode reminder
 HIST_STAMPS="dd.mm.yyyy"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
-eval "$(starship init zsh)"
 
 source "$HOME/zsh/alias.zsh"
 
@@ -34,6 +33,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # brew
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/starship init zsh)"
 
 {{ end }}
 
