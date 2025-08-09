@@ -55,6 +55,10 @@ if.app-name-regex-substring = 'slack'
 run = ['layout tiling', 'move-node-to-workspace Communication']
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'Telegram'
+run = ['layout tiling', 'move-node-to-workspace Communication']
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'TickTick'
 run = ['layout tiling', 'move-node-to-workspace Planning']
 
@@ -69,10 +73,6 @@ run = ['layout tiling', 'move-node-to-workspace Notes']
 [[on-window-detected]]
 if.app-name-regex-substring = 'Obsidian'
 run = ['layout tiling', 'move-node-to-workspace Notes']
-
-# [[on-window-detected]]
-# if.app-name-regex-substring = 'Telegram'
-# run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # Possible values: (qwerty|dvorak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
