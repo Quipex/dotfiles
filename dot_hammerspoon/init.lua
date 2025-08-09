@@ -4,6 +4,15 @@
 require('hs.ipc')
 require("sketchybar-restart")
 
+-- Подключаем GUI-утилиту
+local restartGui = require("process-restart-gui")
+
+-- Горячая клавиша: Alt+Shift+E — открыть окно выбора, Enter — выполнить
+hs.hotkey.bind({"alt","shift"}, "E", function()
+  restartGui.show()
+end)
+
+
 -- 1. Импортируем наш модуль.
 -- require() ищет файл 'window-manipulation.lua' в директории ~/.hammerspoon/
 -- Переменная 'winManips' теперь содержит таблицу, которую мы вернули из того файла.
