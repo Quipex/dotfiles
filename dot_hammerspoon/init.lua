@@ -2,7 +2,6 @@
 
 -- Включаем возможность общаться с Hammerspoon из командной строки
 require('hs.ipc')
-require("sketchybar-restart")
 
 -- Подключаем GUI-утилиту
 local restartGui = require("process-restart-gui")
