@@ -6,3 +6,7 @@ README.md
 .config/linearmouse
 .config/sketchybar
 {{ end }}
+
+{{ if hasPrefix "REV" .chezmoi.hostname }}
+.gitconfig
+{{ end }}
