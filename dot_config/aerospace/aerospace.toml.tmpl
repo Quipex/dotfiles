@@ -67,6 +67,10 @@ if.app-name-regex-substring = 'Structured'
 run = ['layout tiling', 'move-node-to-workspace Planning']
 
 [[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = ['layout tiling', 'move-node-to-workspace Planning']
+
+[[on-window-detected]]
 if.app-id = 'com.apple.mobilenotes'
 run = ['layout tiling', 'move-node-to-workspace Notes']
 
