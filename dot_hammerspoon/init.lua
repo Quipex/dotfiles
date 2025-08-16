@@ -26,5 +26,11 @@ hs.hotkey.bind({"alt"}, "r", function()
   hs.alert.show("Hammerspoon Reloaded")
 end)
 
+local aerospace = require("reload-aerospace")
+
+hs.hotkey.bind({"shift", "alt"}, "R", function()
+    aerospace.reload()
+end)
+
 -- Уведомление о том, что конфигурация загружена
 hs.notify.show("Hammerspoon", "Конфигурация загружена", "Модули подключены.")
