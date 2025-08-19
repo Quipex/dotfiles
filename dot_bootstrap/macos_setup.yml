@@ -20,6 +20,7 @@
       - sketchybar
       - gpg
       - starship
+      - yazi
 
     brew_casks:
       - aerospace
