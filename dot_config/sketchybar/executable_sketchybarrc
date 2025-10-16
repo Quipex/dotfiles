@@ -150,6 +150,22 @@ sketchybar --add item keyboard_layout right \
     icon.padding_right=0 \
     script="$PLUGIN_SHARED_DIR/language.sh"
 
+sketchybar 	--add item memory right \
+    --set memory \
+    icon= \
+    icon.color=0xff$COLOR_GREEN \
+    update_freq=15 \
+    script="$PLUGIN_SHARED_DIR/ram.sh"
+
+sketchybar 	--add item cpu.percent right \
+    --set cpu.percent \
+    icon= \
+	icon.color=0xff$COLOR_LIGHT_BLUE \
+	update_freq=2 \
+    label.drawing=true \
+	label=CPU% \
+	script="$PLUGIN_SHARED_DIR/cpu.sh"
+
 ##### Finalizing Setup #####
 sketchybar --update
 sketchybar --trigger space_change
