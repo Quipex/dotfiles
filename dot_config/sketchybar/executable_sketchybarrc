@@ -141,15 +141,6 @@ sketchybar --add item volume right \
     script="$PLUGIN_SHARED_DIR/volume.sh" \
     --subscribe volume volume_change
 
-# Language Indicator
-sketchybar --add item keyboard_layout right \
-    --set keyboard_layout \
-    update_freq=1 \
-    background.padding_right=5 \
-    icon.padding_left=5 \
-    icon.padding_right=0 \
-    script="$PLUGIN_SHARED_DIR/language.sh"
-
 sketchybar 	--add item memory right \
     --set memory \
     icon= \
@@ -165,6 +156,15 @@ sketchybar 	--add item cpu.percent right \
     label.drawing=true \
 	label=CPU% \
 	script="$PLUGIN_SHARED_DIR/cpu.sh"
+
+# Language Indicator
+sketchybar --add item keyboard_layout right \
+    --set keyboard_layout \
+    update_freq=1 \
+    background.padding_right=5 \
+    icon.padding_left=5 \
+    icon.padding_right=0 \
+    script="$PLUGIN_SHARED_DIR/language.sh"
 
 ##### Finalizing Setup #####
 sketchybar --update
