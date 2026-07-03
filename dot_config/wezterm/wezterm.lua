@@ -5,10 +5,11 @@ local act = wezterm.action
 local config = {
     adjust_window_size_when_changing_font_size = false,
     enable_tab_bar = false,
+    max_fps = 120,
     font_size = 14.0,
     font = wezterm.font('JetBrains Mono'),
-    -- macos_window_background_blur = 30,
-    -- window_background_opacity = 0.92,
+    window_background_opacity = 0.8,
+    macos_window_background_blur = 50,
     keys = {{
         key = "LeftArrow",
         mods = "OPT",
@@ -18,7 +19,7 @@ local config = {
         mods = "OPT",
         action = act.SendString("\x1bf")
     }},
-    window_decorations = "TITLE | RESIZE | MACOS_FORCE_ENABLE_SHADOW",
+    window_decorations = "RESIZE",
     mouse_bindings = { -- Ctrl-click will open the link under the mouse cursor
     {
         event = {
@@ -32,10 +33,15 @@ local config = {
     }}
 }
 
-if wezterm.gui.get_appearance() == 'Dark' then
-    config.color_scheme = 'Catppuccin Mocha' -- Или любая другая ваша темная тема
-else
-    config.color_scheme = 'Catppuccin Latte'
-end
+config.color_scheme = 'Rosé Pine Moon'
+
+config.default_cursor_style = 'BlinkingBlock'
+config.cursor_blink_rate = 500
+config.colors = {
+  cursor_bg = '#c4a7e7',
+  cursor_fg = '#191724',
+}
+
+config.window_close_confirmation = "NeverPrompt"
 
 return config

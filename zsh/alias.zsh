@@ -1,4 +1,5 @@
 # Aliases
+alias lsa="ls -la"
 alias lpc="$HOME/scripts/list-path-content.sh"
 alias dockerup="$HOME/scripts/start-docker.sh"
 alias tg-alert="$HOME/scripts/tg-alert.sh"
