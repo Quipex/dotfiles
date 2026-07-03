@@ -35,8 +35,7 @@ local config = {
 
 config.color_scheme = 'Rosé Pine Moon'
 
-config.default_cursor_style = 'BlinkingBlock'
-config.cursor_blink_rate = 500
+config.default_cursor_style = 'SteadyBlock'
 config.colors = {
   cursor_bg = '#c4a7e7',
   cursor_fg = '#191724',
