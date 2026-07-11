@@ -4,21 +4,21 @@ return {
     lazy = false,
     opts = {
       keymaps = {
-        basic = true,   -- smooth Ctrl-D/Ctrl-U, G/gg, etc.
-        extra = true,   -- smooth n/N, */#, %, etc.
+        basic = true,
+        extra = true,
       },
       options = {
-        delay = 5,          -- ms between steps
+        delay = 7,            -- ms between steps (slightly higher = fewer renders)
         step_size = {
-          vertical = 1,
+          vertical = 2,       -- 2 lines per step instead of 1
           horizontal = 2,
         },
         max_delta = {
-          line = 150,       -- max lines to animate
-          column = false,   -- no column limit
-          time = 1000,      -- max animation duration in ms
+          line = 100,         -- skip animation for jumps > 100 lines
+          column = false,
+          time = 300,         -- max 300ms per animation (was 1000)
         },
-        mode = "cursor",    -- scroll cursor smoothly
+        mode = "cursor",
       },
     },
   },
