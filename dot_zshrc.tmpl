@@ -114,3 +114,6 @@ opencode() {
   GITHUB_PERSONAL_ACCESS_TOKEN="$token" command opencode "$@"
 }
 {{ end }}
+
+# Local env vars (API keys, tokens)
+[ -f "$HOME/.envs" ] && source "$HOME/.envs"
