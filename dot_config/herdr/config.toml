@@ -1,0 +1,30 @@
+# herdr configuration
+# ~/.config/herdr/config.toml
+
+onboarding = false
+
+[keys]
+prefix = "ctrl+s"
+rename_tab = "prefix+comma"
+rename_pane = "prefix+period"
+split_vertical = "prefix+v"
+split_horizontal = "prefix+minus"
+
+[[keys.command]]
+key = "prefix+%"
+type = "shell"
+command = "herdr pane split --current --direction right"
+
+[[keys.command]]
+key = "prefix+\""
+type = "shell"
+command = "herdr pane split --current --direction down"
+
+[theme]
+name = "rose-pine"
+
+[theme.custom]
+accent = "#f6c177"
+
+[experimental]
+switch_ascii_input_source_in_prefix = true
