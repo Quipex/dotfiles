@@ -26,12 +26,6 @@
 - используй treehouse чтобы создавать worktrees
 - treehouse не имеет ограничения по размеру пула: просто бери новый
   worktree не думая о том, сколько их свободно
-- Action, KAction, Action Factories и прочие базовые классы/контракты действий
-  (Action.java, KAction.kt, Result.java, LocalActionFactory, LocalActionProxyFactory,
-  Batch и т.п.) лежат в `~/projects/revolut/alpha` или `~/projects/revolut/credit-tools`.
-  Никогда не ищи их в локальном worktree текущего проекта (hyde/ametist/samba) - там только
-  переиспользуют эти классы, но не определяют. Искать базовые контракты в worktree =
-  пустой результат и потерянный шаг.
 
 ## Testing
 

@@ -55,9 +55,6 @@ const IDLE_ICON = "\u{1F3C1}";
 const IDLE_ICON_GAP = " ";
 /** Map raw model id -> short alias shown in the footer. Unmapped ids pass through. */
 const MODEL_ALIASES: Record<string, string> = {
-  "together_ai/revolut-ltd/glm-5-2-nvfp4": "GLM 5.2",
-  "fireworks_revolut-non-coding/accounts/revolut-non-coding/deployments/glm-5p2-non-b200-250k-context": "glm-5.2-250k",
-  "fireworks_revolut-non-coding/accounts/revolut-non-coding/deployments/dsv4-non-b200-250k-context": "DeepSeek V4 Flash",
 };
 // ───────────────────────────────────────────────────────────────────────────
 

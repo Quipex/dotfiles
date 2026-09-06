@@ -14,7 +14,7 @@ return {
     },
   },
 
-  -- Kotlin LSP (hyde is Kotlin-heavy).
+  -- Kotlin LSP.
   -- We start it the same robust way nvim-jdtls starts jdtls: a FileType autocmd
   -- that calls vim.lsp.start directly with an explicit cmd + root_dir. This
   -- avoids the deprecated lspconfig.<server>.setup() path (unreliable in recent
@@ -39,7 +39,7 @@ return {
           vim.lsp.start({
             name = 'kotlin_language_server',
             cmd = { cmd },
-            -- hyde is 26k Kotlin files / 164 Gradle modules. fwcd KLS compiles
+            -- Large Kotlin monorepos: fwcd KLS compiles
             -- the whole source path on lintAll and OOMs on the JVM default heap
             -- (see ~/.local/state/nvim/lsp.log: java.lang.OutOfMemoryError).
             -- The Gradle launcher reads KOTLIN_LANGUAGE_SERVER_OPTS and appends it
