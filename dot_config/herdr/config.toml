@@ -1,30 +1,33 @@
-# herdr configuration
-# ~/.config/herdr/config.toml
-
 onboarding = false
+[session]
+# Resume supported AI-agent panes into their native conversation sessions
+# after a Herdr server restart. Requires official integrations that report
+# session refs.
+resume_agents_on_restore = true
 
 [keys]
 prefix = "ctrl+s"
 rename_tab = "prefix+comma"
 rename_pane = "prefix+period"
-split_vertical = "prefix+v"
-split_horizontal = "prefix+minus"
+split_vertical = "prefix+%"
+split_horizontal = "prefix+\""
 
-[[keys.command]]
-key = "prefix+%"
-type = "shell"
-command = "herdr pane split --current --direction right"
-
-[[keys.command]]
-key = "prefix+\""
-type = "shell"
-command = "herdr pane split --current --direction down"
+[ui.toast]
+delivery = "off"
 
 [theme]
-name = "rose-pine"
+name = "rose-pine-dawn"
+auto_switch = false
 
-[theme.custom]
-accent = "#f6c177"
+[ui]
+pane_borders = true
+pane_gaps = true
+accent = "#b4637a"
+show_agent_labels_on_pane_borders = true
 
+agent_panel_sort = "priority"
 [experimental]
 switch_ascii_input_source_in_prefix = true
+
+[ui.sound]
+enabled = false
